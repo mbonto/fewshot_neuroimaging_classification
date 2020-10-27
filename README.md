@@ -102,7 +102,7 @@ Here are the results obtained with two random splits (average accuracy and 95% c
 
 [5] [Antoniou, A. et al. (2018) How to train your MAML.](https://openreview.net/pdf?id=HJGven05Y7)
 
-[6] [Preti, M. G. et al.  (2019) Decoupling of brain function from structure reveals regional behavioral specialization in humans] (https://www.nature.com/articles/s41467-019-12765-7)
+[6] [Preti, M. G. et al.  (2019) Decoupling of brain function from structure reveals regional behavioral specialization in humans](https://www.nature.com/articles/s41467-019-12765-7)
 
 ## Contact
 Please contact us if there are any problems.
