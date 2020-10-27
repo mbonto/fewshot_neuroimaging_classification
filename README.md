@@ -85,7 +85,7 @@ Here are the results obtained with two random splits (average accuracy and 95% c
 ## References
 [Pinho, A.L. et al. (2020) Individual Brain Charting dataset extension, second release of high-resolution fMRI data for cognitive mapping.](https://project.inria.fr/IBC/ibc-in-a-nutshell/)
 
-[Gorgolewski, KJ et al. (2015) NeuroVault.org: a web-based repository for collecting and sharing unthresholded statistical maps of the brain.](https://neurovault.org/)
+[Gorgolewski, K.J. et al. (2015) NeuroVault.org: a web-based repository for collecting and sharing unthresholded statistical maps of the brain.](https://neurovault.org/)
 
 [Wang, Y. et al. (2019) Simpleshot: Revisiting nearest-neighbor classification for few-shot learning.](https://arxiv.org/pdf/1911.04623.pdf)
 
