@@ -57,8 +57,8 @@ We experiment three architectures of backbone networks: a multi-layer perceptron
 - MLP: the input is seen as a simple vector describing the activity of the considered regions of interest. *We vary 2 hyperparameters: the number of hidden layers and the number of features per hidden layer.*
 
 - GNN: the input is the vector described before. It is diffused once on a graph describing the interaction between regions of interest, and then it is handled by a MLP. Here are some precisions about the diffusion on  the graph:
- * The graph we consider in this work is a thresholded structural graph (1% highest connection weights), previously introduced in [6]. The graph has been obtained with tractography, a method consisting in measuring the strength of the white fibers between regions in the brain.
- * Denoting A the adjacency matrix of structural graph (such that A[i,j] represents the strength of the connections between region i and region j and A[i,i] = 0), we define the diffusion of an input vector on the structural graph as the matrix multiplication of the input vector with $\hat{D}^{-1}\hat{A}$, where $\hat{A} = A + max(A)I$ and $\hat{D}$ is the degree matrix of $\hat{A}$.
+     - The graph we consider in this work is a thresholded structural graph (1% highest connection weights), previously introduced in [6]. The graph has been obtained with tractography, a method consisting in measuring the strength of the white fibers between regions in the brain.
+     - Denoting A the adjacency matrix of structural graph (such that A[i,j] represents the strength of the connections between region i and region j and A[i,i] = 0), we define the diffusion of an input vector on the structural graph as the matrix multiplication of the input vector with $\hat{D}^{-1}\hat{A}$, where $\hat{A} = A + max(A)I$ and $\hat{D}$ is the degree matrix of $\hat{A}$.
 *We vary the same hyperparameters as a MLP.*
 
 - CNN: 1x1 convolutional neural network, considering each region of interest independently up to the final layer of the architecture. The last layer is fully-connected. Before the last layer, the feature maps are averaged per input region. *We vary the number of hidden layers and the number of feature maps per hidden layer.*
@@ -103,7 +103,7 @@ Here are the results obtained with two random splits (average accuracy and 95% c
 
 [5] [Antoniou, A. et al. (2018) How to train your MAML.](https://openreview.net/pdf?id=HJGven05Y7)
 
-[6] [Preti, M. G. et al.  (2019) Decoupling of brain function from structure reveals regional behavioral specialization in humans (https://www.nature.com/articles/s41467-019-12765-7)
+[6] [Preti, M. G. et al.  (2019) Decoupling of brain function from structure reveals regional behavioral specialization in humans] (https://www.nature.com/articles/s41467-019-12765-7)
 
 ## Contact
 Please contact us if there are any problems.
