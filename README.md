@@ -13,21 +13,21 @@ Few-shot learning consists in addressing data-thrifty (inductive few-shot) or la
 - Pytorch = 1.3
 
 ### 2. Dataset construction
-The original IBC data are accessible on NeuroVault. In the dataset folder, we propose a notebook to discover the data and a notebook to adapt the data to the few-shot learning setting. You have to execute them to download the data from NeuroVault and to split them in a random way in three parts (base dataset, validation dataset, novel dataset).
+The original IBC data [1] are accessible on NeuroVault [2]. In the dataset folder, we propose a notebook to discover the data and a notebook to adapt the data to the few-shot learning setting. You have to execute them to download the data from NeuroVault and to split them in a random way in three parts (base dataset, validation dataset, novel dataset).
 
 ### 3. Few-shot learning paradigms
 Our code is built upon the original codes of ["How to train your MAML"](https://openreview.net/pdf?id=HJGven05Y7) (MAML_plus_plus) and ["SimpleShot: Revisiting Nearest-Neighbor Classification for Few-Shot Learning"](https://arxiv.org/pdf/1911.04623.pdf) (SimpleShot). They have been adapted to work on new backbone networks and on new data.
 
 By using this code, you agree to the [license](https://github.com/mbonto/fewshot_neuroimaging_classification/blob/main/LICENSE) file of this work and to the license files of the original codes of MAML_plus_plus and SimpleShot.
 
-#### SimpleShot
+#### SimpleShot [3]
 Go to the SimpleShot folder. To train a backbone and evaluate the SimpleShot method on few-shot problems, have a look at the Train_and_evaluate notebook.
 To evaluate a baseline based on a nearest class mean classifier, have a look at the baseline notebook.
 
-#### PT + MAP
+#### PT + MAP [4]
 Go to the SimpleShot folder. PT+MAP proposes a different way of solving few-shot problems based on the knowledge of other unlabeled samples (transductive setting). In this article, it relies on the backbone trained with SimpleShot. To evaluate PT+MAP method, have a look at the Train_and_evaluate notebook.
 
-#### MAML++
+#### MAML++ [5]
 Go to the MAML_plus_plus folder. To train a backbone and evaluate the MAML++ method, execute the following commands:
 
 0- Dataset.\
@@ -52,6 +52,16 @@ Go to experiment_scripts and launch the scripts you have defined before. For ins
 Go to the results folder to see the results.
 
 ### 4. Backbone networks
+We experiment three architectures of backbone networks: a multi-layer perceptron (MLP), a graph neural network (GNN) and a convolutional neural network (CNN).
+
+- MLP: the input is seen as a simple vector describing the activity of the considered regions of interest. *We vary 2 hyperparameters: the number of hidden layers and the number of features per hidden layer.*
+
+- GNN: the input is the vector described before. It is diffused once on a graph describing the interaction between regions of interest, and then it is handled by a MLP. Here are some precisions about the diffusion on  the graph:
+    The graph we consider in this work is a thresholded structural graph (1% highest connection weights), previously introduced in [6]. The graph has been obtained with tractography, a method consisting in measuring the strength of the white fibers between regions in the brain.
+    Denoting A the adjacency matrix of structural graph (such that A[i,j] represents the strength of the connections between region i and region j and A[i,i] = 0), we define the diffusion of an input vector on the structural graph as the matrix multiplication of the input vector with $\hat{D}^{-1}\hat{A}$, where $\hat{A} = A + max(A)I$ and $\hat{D}$ is the degree matrix of $\hat{A}$.
+*We vary the same hyperparameters as a MLP.*
+
+- CNN: 1x1 convolutional neural network, considering each region of interest independently up to the final layer of the architecture. The last layer is fully-connected. Before the last layer, the feature maps are averaged per input region. *We vary the number of hidden layers and the number of feature maps per hidden layer.*
 
 ### 5. Results
 Here are the results obtained with two random splits (average accuracy and 95% confidence interval over 10,000 5-way tasks from the novel dataset).
@@ -83,15 +93,17 @@ Here are the results obtained with two random splits (average accuracy and 95% c
 |          |         |CNN       | +- | +- |
 
 ## References
-[Pinho, A.L. et al. (2020) Individual Brain Charting dataset extension, second release of high-resolution fMRI data for cognitive mapping.](https://project.inria.fr/IBC/ibc-in-a-nutshell/)
+[1] [Pinho, A.L. et al. (2020) Individual Brain Charting dataset extension, second release of high-resolution fMRI data for cognitive mapping.](https://project.inria.fr/IBC/ibc-in-a-nutshell/)
 
-[Gorgolewski, K.J. et al. (2015) NeuroVault.org: a web-based repository for collecting and sharing unthresholded statistical maps of the brain.](https://neurovault.org/)
+[2] [Gorgolewski, K.J. et al. (2015) NeuroVault.org: a web-based repository for collecting and sharing unthresholded statistical maps of the brain.](https://neurovault.org/)
 
-[Wang, Y. et al. (2019) Simpleshot: Revisiting nearest-neighbor classification for few-shot learning.](https://arxiv.org/pdf/1911.04623.pdf)
+[3] [Wang, Y. et al. (2019) Simpleshot: Revisiting nearest-neighbor classification for few-shot learning.](https://arxiv.org/pdf/1911.04623.pdf)
 
-[Hu, Y. et al. (2020) Leveraging the Feature Distribution in Transfer-based Few-Shot Learning.](https://arxiv.org/pdf/2006.03806.pdf)
+[4] [Hu, Y. et al. (2020) Leveraging the Feature Distribution in Transfer-based Few-Shot Learning.](https://arxiv.org/pdf/2006.03806.pdf)
 
-[Antoniou, A. et al. (2018) How to train your MAML.](https://openreview.net/pdf?id=HJGven05Y7)
+[5] [Antoniou, A. et al. (2018) How to train your MAML.](https://openreview.net/pdf?id=HJGven05Y7)
+
+[6] [Preti, M. G. et al.  (2019) Decoupling of brain function from structure reveals regional behavioral specialization in humans (https://www.nature.com/articles/s41467-019-12765-7)
 
 ## Contact
 Please contact us if there are any problems.
