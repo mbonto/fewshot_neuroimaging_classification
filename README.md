@@ -87,11 +87,11 @@ Here are the results obtained with two random splits (average accuracy and 95% c
 
 [Gorgolewski, KJ et al. (2015) NeuroVault.org: a web-based repository for collecting and sharing unthresholded statistical maps of the brain.](https://neurovault.org/)
 
-[SimpleShot](https://arxiv.org/pdf/1911.04623.pdf)
+[Wang, Y. et al. (2019) Simpleshot: Revisiting nearest-neighbor classification for few-shot learning.](https://arxiv.org/pdf/1911.04623.pdf)
 
-[PT+MAP](https://arxiv.org/pdf/2006.03806.pdf)
+[Hu, Y. et al. (2020) Leveraging the Feature Distribution in Transfer-based Few-Shot Learning.](https://arxiv.org/pdf/2006.03806.pdf)
 
-[MAML++](https://openreview.net/pdf?id=HJGven05Y7)
+[Antoniou, A. et al. (2018) How to train your MAML.](https://openreview.net/pdf?id=HJGven05Y7)
 
 ## Contact
 Please contact us if there are any problems.
