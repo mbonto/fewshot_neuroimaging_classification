@@ -82,6 +82,13 @@ Here are the results obtained with two random splits (average accuracy and 95% c
 |          |         |GNN       | +- | +- |
 |          |         |CNN       | +- | +- |
 
+## References
+[Pinho, A.L. et al. (2020) Individual Brain Charting dataset extension, second release of high-resolution fMRI data for cognitive mapping.](https://project.inria.fr/IBC/ibc-in-a-nutshell/)
+[Gorgolewski, KJ et al. (2015) NeuroVault.org: a web-based repository for collecting and sharing unthresholded statistical maps of the brain.](https://neurovault.org/)
+[SimpleShot](https://arxiv.org/pdf/1911.04623.pdf)
+[PT+MAP](https://arxiv.org/pdf/2006.03806.pdf)
+[MAML++](https://openreview.net/pdf?id=HJGven05Y7)
+
 ## Contact
 Please contact us if there are any problems.
 
