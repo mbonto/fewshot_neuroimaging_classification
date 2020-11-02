@@ -81,15 +81,15 @@ Here are the results obtained with two random splits (average accuracy and 95% c
 |  Method  | Setting | Backbone |     5-shot  |    1-shot   |
 |:--------:|:-------:|:--------:|:-----------:|:-----------:|
 | Baseline |   -     |    -     | +- | +- |
-|SimpleShot|Inductive|MLP       | +- | +- |
-|          |         |GNN       | +- | +- |
-|          |         |CNN       | +- | +- |
-|PT+MAP    |Transductive|MLP    | +- | +- |
-|          |         |GNN       | +- | +- |
-|          |         |CNN       | +- | +- |
-|MAML++    |Inductive|MLP       | +- | +- |
-|          |         |GNN       | +- | +- |
-|          |         |CNN       | +- | +- |
+|SimpleShot|Inductive|MLP       |74.67 +- 0.20 |**58.51 +- 0.21**|
+|          |         |GNN       |72.58 +- 0.19|56.06 +- 0.20|
+|          |         |CNN       |67.19 +- 0.18|50.52 +- 0.19|
+|PT+MAP    |Transductive|MLP    |74.74 +- 0.23|**64.66 +- 0.29**|
+|          |         |GNN       |72.55 +- 0.22|61.22 +- 0.29|
+|          |         |CNN       |67.71 +- 0.22|55.81 +- 0.28|
+|MAML++    |Inductive|MLP       |**75.28 +- 0.19**|57.74 +- 0.21|
+|          |         |GNN       |73.43 +- 0.19|54.82 +- 0.21|
+|          |         |CNN       |73.00 +- 0.18|57.23 +- 0.20|
 
 ## References
 [1] [Pinho, A.L. et al. (2020) Individual Brain Charting dataset extension, second release of high-resolution fMRI data for cognitive mapping.](https://project.inria.fr/IBC/ibc-in-a-nutshell/)
