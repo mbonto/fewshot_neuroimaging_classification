@@ -80,7 +80,7 @@ Here are the results obtained with two random splits (average accuracy and 95% c
 
 |  Method  | Setting | Backbone |     5-shot  |    1-shot   |
 |:--------:|:-------:|:--------:|:-----------:|:-----------:|
-| Baseline |   -     |    -     | +- | +- |
+| Baseline |   -     |    -     |63.97 +- 0.18|48.73 +- 0.19|
 |SimpleShot|Inductive|MLP       |74.67 +- 0.20 |**58.51 +- 0.21**|
 |          |         |GNN       |72.58 +- 0.19|56.06 +- 0.20|
 |          |         |CNN       |67.19 +- 0.18|50.52 +- 0.19|
