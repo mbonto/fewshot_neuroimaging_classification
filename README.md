@@ -34,7 +34,7 @@ Go to the MAML_plus_plus folder. To train a backbone and evaluate the MAML++ met
 
 0- Dataset.\
 To execute the MAML++ code, all images need to be stored in a folder in a particular way.
-Thus, to prepare the data, go to the datasets folder and execute the notebook FormatIBC.
+Thus, to prepare the data, go to the datasets folder and execute the notebook Format_IBC.
 
 1- Define the configuration of the experiment.\
 Go to the experiment_config folder and execute the notebook Create config file.
