@@ -16,7 +16,7 @@ Few-shot learning consists in addressing data-thrifty (inductive few-shot) or la
 The original IBC dataset (releases 1 and 2) [1] is accessible on NeuroVault [2] (collection 6618). In the dataset folder, we propose a notebook to discover the data and a notebook to explaining how we adapt the IBC dataset to create a benchmark dataset for few-shot learning. You have to execute them to download the data from NeuroVault.
 
 ### 3. Few-shot learning paradigms
-Our code is built upon the original codes of ["How to train your MAML"](https://openreview.net/pdf?id=HJGven05Y7) (MAML_plus_plus) and ["SimpleShot: Revisiting Nearest-Neighbor Classification for Few-Shot Learning"](https://arxiv.org/pdf/1911.04623.pdf) (SimpleShot). They have been adapted to work on new backbone networks and on new data.
+Our code is built upon the original codes of ["How to train your MAML"](https://openreview.net/pdf?id=HJGven05Y7) (MAML_plus_plus) and ["SimpleShot: Revisiting Nearest-Neighbor Classification for Few-Shot Learning"](https://arxiv.org/pdf/1911.04623.pdf) (SimpleShot). We adapted the original codes to work on new backbone networks and on new data.
 
 By using this code, you agree to the [license](https://github.com/mbonto/fewshot_neuroimaging_classification/blob/main/LICENSE) file of this work and to the license files of the original codes of MAML_plus_plus and SimpleShot.
 
