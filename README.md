@@ -13,7 +13,7 @@ Few-shot learning consists in addressing data-thrifty (inductive few-shot) or la
 - Pytorch = 1.3
 
 ### 2. Dataset construction
-The original IBC data [1] are accessible on NeuroVault [2]. In the dataset folder, we propose a notebook to discover the data and a notebook to adapt the data to the few-shot learning setting. You have to execute them to download the data from NeuroVault and to split them in a random way in three parts (base dataset, validation dataset, novel dataset).
+The original IBC dataset (releases 1 and 2) [1] is accessible on NeuroVault [2] (collection 6618). In the dataset folder, we propose a notebook to discover the data and a notebook to adapt the data to the few-shot learning setting. You have to execute them to download the data from NeuroVault and to split them in a random way in three parts (base dataset, validation dataset, novel dataset).
 
 ### 3. Few-shot learning paradigms
 Our code is built upon the original codes of ["How to train your MAML"](https://openreview.net/pdf?id=HJGven05Y7) (MAML_plus_plus) and ["SimpleShot: Revisiting Nearest-Neighbor Classification for Few-Shot Learning"](https://arxiv.org/pdf/1911.04623.pdf) (SimpleShot). They have been adapted to work on new backbone networks and on new data.
