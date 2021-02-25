@@ -20,7 +20,7 @@ Below, we describe how to reproduce our results using either SimpleShot (inducti
 
 Our code is built upon the original codes of ["How to train your MAML"](https://openreview.net/pdf?id=HJGven05Y7) (MAML_plus_plus) and ["SimpleShot: Revisiting Nearest-Neighbor Classification for Few-Shot Learning"](https://arxiv.org/pdf/1911.04623.pdf) (SimpleShot). We adapted the original codes to work on new backbone networks and on new data. 
 
-By using this code, you agree to the [license](https://github.com/mbonto/fewshot_neuroimaging_classification/blob/main/LICENSE) file of this work and to the license files of the original codes of MAML_plus_plus and SimpleShot.
+By using this code, you agree to the [license](https://github.com/mbonto/fewshot_neuroimaging_classification/blob/main/LICENSE) file of this work and to the license files of the original codes of [MAML_plus_plus](https://github.com/AntreasAntoniou/HowToTrainYourMAMLPytorch) and [SimpleShot](https://github.com/mileyan/simple_shot).
 
 #### SimpleShot [3]
 Go to the SimpleShot folder. To train a backbone and evaluate the SimpleShot method on few-shot problems, have a look at the Train_and_evaluate notebook.
