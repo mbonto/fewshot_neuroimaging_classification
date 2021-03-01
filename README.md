@@ -60,12 +60,26 @@ We experiment three architectures of backbone networks: a multi-layer perceptron
 
 - GNN: the input is the vector described before. It is diffused once on a graph describing the interaction between regions of interest, and then it is handled by a MLP. *We vary the same hyperparameters as a MLP.* Here are some precisions about the diffusion on  the graph:
      - In this work, the graph is a thresholded structural graph (1% highest connection weights), previously introduced in [6]. It has been obtained with tractography, a method measuring the strength of the white fibers between regions in the brain.
-     - Denoting A the adjacency matrix of the structural graph (such that A[i,j] represents the strength of the connections between region i and region j and A[i,i] = 0), we define the diffusion of an input vector on the structural graph as: the matrix multiplication of the input vector with D̂<sup>-1</sup>Â, where Â = A + max(A)I and D̂ is the degree matrix of Â.
+     - Denoting A the adjacency matrix of the structural graph (such that A[i,j] represents the strength of the connections between region i and region j and A[i,i] = 0), we define the diffusion of an input vector on the structural graph as: the matrix multiplication of the input vector with D̂<sup>-1/2</sup>ÂD̂<sup>-1/2</sup>, where Â = A + I and D̂ is the degree matrix of Â.
 
 - CNN: 1x1 convolutional neural network, considering each region of interest independently up to the final layer of the architecture. The last layer is fully-connected. Before the last layer, the feature maps are averaged per input region. *We vary the number of hidden layers and the number of feature maps per hidden layer.*
 
 ### 5. Results
-Here are the results obtained with two random splits (average accuracy and 95% confidence interval over 10,000 5-way tasks from the novel dataset).
+Here are the results obtained with two random splits (average accuracy and 95% confidence interval over 10,000 5-way tasks from the novel dataset). The first table is obtained with the split stored in dataset/split1. The second table is obtained with the split stored in dataset/split2.
+
+|  Method  | Setting | Backbone | Hyperparameters (number of hidden layer / number of features (or feature maps for CNN) |    5-shot  |    1-shot   |
+|:--------:|:-------:|:--------:|:--------------------------------------------------------------------------------------:|:-----------:|:-----------:|
+| Baseline |   -     |    -     |                                             -                                          |70.56 +- 0.21|57.26 +- 0.20|
+|SimpleShot|Inductive|MLP       |                                            2/360                                       |**86.00 +- 0.16** |**72.54 +- 0.20**|
+|          |         |GNN       |                                            2/1024                                      |85.14 +- 0.16|71.96 +- 0.21|
+|          |         |CNN       |                                            2/64                                        |74.26 +- 0.20|59.98 +- 0.20|
+|PT+MAP    |Transductive|MLP    |                                            2/360                                       |**88.76 +- 0.17**|**84.34 +- 0.25**|
+|          |         |GNN       |                                            2/1024                                      |87.86 +- 0.18|83.19 +- 0.25|
+|          |         |CNN       |                                            2/64                                        |74.82 +- 0.20|63.71 +- 0.26|
+|MAML++    |Inductive|MLP       |                                            1/360                                       |82.31 +- 0.18|67.64 +- 0.22|
+|          |         |GNN       |                                            1/128                                       |80.87 +- 0.18|67.71 +- 0.22|
+|          |         |CNN       |                                            2/360                                       |76.80 +- 0.22|64.68 +- 0.21|
+
 
 |  Method  | Setting | Backbone |     5-shot  |    1-shot   |
 |:--------:|:-------:|:--------:|:-----------:|:-----------:|
@@ -80,18 +94,6 @@ Here are the results obtained with two random splits (average accuracy and 95% c
 |          |         |GNN       |**77.63 +- 0.19**|**63.18 +- 0.23**|
 |          |         |CNN       |74.43 +- 0.19|59.81 +- 0.21|
 
-|  Method  | Setting | Backbone |     5-shot  |    1-shot   |
-|:--------:|:-------:|:--------:|:-----------:|:-----------:|
-| Baseline |   -     |    -     |63.97 +- 0.18|48.73 +- 0.19|
-|SimpleShot|Inductive|MLP       |74.67 +- 0.20 |**58.51 +- 0.21**|
-|          |         |GNN       |72.58 +- 0.19|56.06 +- 0.20|
-|          |         |CNN       |67.19 +- 0.18|50.52 +- 0.19|
-|PT+MAP    |Transductive|MLP    |74.74 +- 0.23|**64.66 +- 0.29**|
-|          |         |GNN       |72.55 +- 0.22|61.22 +- 0.29|
-|          |         |CNN       |67.71 +- 0.22|55.81 +- 0.28|
-|MAML++    |Inductive|MLP       |**75.28 +- 0.19**|57.74 +- 0.21|
-|          |         |GNN       |73.43 +- 0.19|54.82 +- 0.21|
-|          |         |CNN       |73.00 +- 0.18|57.23 +- 0.20|
 
 ## References
 [1] [Pinho, A.L. et al. (2020) Individual Brain Charting dataset extension, second release of high-resolution fMRI data for cognitive mapping.](https://project.inria.fr/IBC/ibc-in-a-nutshell/)
