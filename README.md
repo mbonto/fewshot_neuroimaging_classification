@@ -67,7 +67,8 @@ We experiment three architectures of backbone networks: a multi-layer perceptron
 ### 5. Results
 Here are the results obtained with two random splits (average accuracy and 95% confidence interval over 10,000 5-way tasks from the novel dataset). The first table is obtained with the split stored in dataset/split1. The second table is obtained with the split stored in dataset/split2.
 
-|  Method  | Setting | Backbone | # hidden layers / features (or feature maps for CNN) |    5-shot  |    1-shot   |
+|  Method  | Setting | Backbone | # hidden layers / features |    5-shot  |    1-shot   |
+|          |         |          |  (or feature maps for CNN) |            |             |
 |:--------:|:-------:|:--------:|:---------------------------------------------------------------------:|:-----------:|:-----------:|
 | Baseline |   -     |    -     |                            -                         |70.56 +- 0.21|57.26 +- 0.20|
 |SimpleShot|Inductive|MLP       |                           2/360                      |**86.00 +- 0.16** |**72.54 +- 0.20**|
