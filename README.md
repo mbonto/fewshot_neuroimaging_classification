@@ -67,18 +67,18 @@ We experiment three architectures of backbone networks: a multi-layer perceptron
 ### 5. Results
 Here are the results obtained with two random splits (average accuracy and 95% confidence interval over 10,000 5-way tasks from the novel dataset). The first table is obtained with the split stored in dataset/split1. The second table is obtained with the split stored in dataset/split2.
 
-|  Method  | Setting | Backbone | Hyperparameters (number of hidden layer / number of features (or feature maps for CNN) |    5-shot  |    1-shot   |
-|:--------:|:-------:|:--------:|:--------------------------------------------------------------------------------------:|:-----------:|:-----------:|
-| Baseline |   -     |    -     |                                             -                                          |70.56 +- 0.21|57.26 +- 0.20|
-|SimpleShot|Inductive|MLP       |                                            2/360                                       |**86.00 +- 0.16** |**72.54 +- 0.20**|
-|          |         |GNN       |                                            2/1024                                      |85.14 +- 0.16|71.96 +- 0.21|
-|          |         |CNN       |                                            2/64                                        |74.26 +- 0.20|59.98 +- 0.20|
-|PT+MAP    |Transductive|MLP    |                                            2/360                                       |**88.76 +- 0.17**|**84.34 +- 0.25**|
-|          |         |GNN       |                                            2/1024                                      |87.86 +- 0.18|83.19 +- 0.25|
-|          |         |CNN       |                                            2/64                                        |74.82 +- 0.20|63.71 +- 0.26|
-|MAML++    |Inductive|MLP       |                                            1/360                                       |82.31 +- 0.18|67.64 +- 0.22|
-|          |         |GNN       |                                            1/128                                       |80.87 +- 0.18|67.71 +- 0.22|
-|          |         |CNN       |                                            2/360                                       |76.80 +- 0.22|64.68 +- 0.21|
+|  Method  | Setting | Backbone | Hyperparameters (# hidden layers / features (or feature maps for CNN) |    5-shot  |    1-shot   |
+|:--------:|:-------:|:--------:|:---------------------------------------------------------------------:|:-----------:|:-----------:|
+| Baseline |   -     |    -     |                                             -                         |70.56 +- 0.21|57.26 +- 0.20|
+|SimpleShot|Inductive|MLP       |                                            2/360                      |**86.00 +- 0.16** |**72.54 +- 0.20**|
+|          |         |GNN       |                                            2/1024                     |85.14 +- 0.16|71.96 +- 0.21|
+|          |         |CNN       |                                            2/64                       |74.26 +- 0.20|59.98 +- 0.20|
+|PT+MAP    |Transductive|MLP    |                                            2/360                      |**88.76 +- 0.17**|**84.34 +- 0.25**|
+|          |         |GNN       |                                            2/1024                     |87.86 +- 0.18|83.19 +- 0.25|
+|          |         |CNN       |                                            2/64                       |74.82 +- 0.20|63.71 +- 0.26|
+|MAML++    |Inductive|MLP       |                                            1/360                      |82.31 +- 0.18|67.64 +- 0.22|
+|          |         |GNN       |                                            1/128                      |80.87 +- 0.18|67.71 +- 0.22|
+|          |         |CNN       |                                            2/360                      |76.80 +- 0.22|64.68 +- 0.21|
 
 
 |  Method  | Setting | Backbone |     5-shot  |    1-shot   |
