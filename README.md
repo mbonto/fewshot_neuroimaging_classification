@@ -24,7 +24,7 @@ By using this code, you agree to the [license](https://github.com/mbonto/fewshot
 
 #### SimpleShot [3]
 Go to the SimpleShot folder. To train a backbone and evaluate the SimpleShot method on few-shot problems, have a look at the Train_and_evaluate notebook.
-To evaluate a baseline based on a nearest class mean classifier, have a look at the baseline notebook.
+To evaluate the performance of a nearest class mean classifier applied directly on the inputs, have a look at the Baseline_NCM notebook. To evaluate the performance of a logistic regression trained directly on the inputs, have a look at the Baseline_LR notebook.
 
 #### PT + MAP [4]
 Go to the SimpleShot folder. PT+MAP proposes a different way of solving few-shot problems based on the knowledge of other unlabeled samples (transductive setting). In this article, it relies on the backbone trained with SimpleShot. To evaluate PT+MAP method, have a look at the Train_and_evaluate notebook.
@@ -65,11 +65,12 @@ We experiment three architectures of backbone networks: a multi-layer perceptron
 - CNN: 1x1 convolutional neural network, considering each region of interest independently up to the final layer of the architecture. The last layer is fully-connected. Before the last layer, the feature maps are averaged per input region. *We vary the number of hidden layers and the number of feature maps per hidden layer.*
 
 ### 5. Results
-Here are the results obtained with two random splits (average accuracy and 95% confidence interval over 10,000 5-way tasks from the novel dataset). The first table is obtained with the split stored in dataset/split1. The second table is obtained with the split stored in dataset/split2.
+Here are the results obtained with two random splits (average accuracy and 95% confidence interval over 10,000 5-way tasks from the novel dataset). The first table is obtained with the split stored in dataset/split1. The second table is obtained with the split stored in dataset/split2. *NCM* stands for nearest-class mean classifier and *LR* for logistic regression. Looking at the baselines, we observe that the few-shot tasks generated from the novel classes of split1 are easier than the ones generated from split2. That explains why figures between both tables are really different.
 
 |  Method  | Setting | Backbone | # hidden layers / features<br>(or feature maps for CNN)|    5-shot  |    1-shot   |
 |:--------:|:-------:|:--------:|:---------------------------------------------------------------------:|:-----------:|:-----------:|
-| Baseline |   -     |    -     |                            -                         |70.56 +- 0.21|57.26 +- 0.20|
+| Baseline NCM |   -     |    -     |                            -                         |70.56 +- 0.21|57.26 +- 0.20|
+| Baseline LR |   -     |    -     |                            -                         |71.67 +- 0.21|53.04 +- 0.20|
 |SimpleShot|Inductive|MLP       |                           2/360                      |**86.00 +- 0.16** |**72.54 +- 0.20**|
 |          |         |GNN       |                           2/1024                     |85.14 +- 0.16|71.96 +- 0.21|
 |          |         |CNN       |                           2/64                       |74.26 +- 0.20|59.98 +- 0.20|
@@ -81,18 +82,20 @@ Here are the results obtained with two random splits (average accuracy and 95% c
 |          |         |CNN       |                           2/360                      |76.80 +- 0.22|64.68 +- 0.21|
 
 
-|  Method  | Setting | Backbone |     5-shot  |    1-shot   |
-|:--------:|:-------:|:--------:|:-----------:|:-----------:|
-| Baseline |   -     |    -     |65.85 +- 0.18|50.35 +- 0.18|
-|SimpleShot|Inductive|MLP       |76.06 +- 0.18|58.68 +- 0.20|
-|          |         |GNN       |75.63 +- 0.18|57.58 +- 0.20|
-|          |         |CNN       |66.88 +- 0.20|51.37 +- 0.21|
-|PT+MAP    |Transductive|MLP    |**78.77 +- 0.20**|**69.35 +- 0.28**|
-|          |         |GNN       |**78.71 +- 0.20**|**69.31 +- 0.28**|
-|          |         |CNN       |72.05 +- 0.21|60.64 +- 0.29|
-|MAML++    |Inductive|MLP       |**77.82 +- 0.19**|**62.86 +- 0.23**|
-|          |         |GNN       |**77.63 +- 0.19**|**63.18 +- 0.23**|
-|          |         |CNN       |74.43 +- 0.19|59.81 +- 0.21|
+|  Method  | Setting | Backbone | # hidden layers / features<br>(or feature maps for CNN)|    5-shot  |    1-shot   |
+|:--------:|:-------:|:--------:|:---------------------------------------------------------------------:|:-----------:|:-----------:|
+| Baseline NCM |   -     |    -     |                            -                         |64.23 +- 0.18|45.59 +- 0.18|
+| Baseline LR |   -     |    -     |                            -                         |65.79 +- 0.19|41.35 +- 0.17|
+|SimpleShot|Inductive|MLP       |                           2/256                      |**74.1 +- 0.18**|**57.97 +- 0.21**|
+|          |         |GNN       |                           1/128                      |73.53 +- 0.18|55.03 +- 0.20|
+|          |         |CNN       |                           2/256                      |68.75 +- 0.19|49.82 +- 0.20|
+|PT+MAP    |Transductive|MLP    |                           2/256                      |**75.31 +- 0.20**|**65.01 +- 0.29**|
+|          |         |GNN       |                           1/128                      |74.34 +- 0.20|63.02 +- 0.29|
+|          |         |CNN       |                           2/256                      |73.05 +- 0.21|59.13 +- 0.28|
+|MAML++    |Inductive|MLP       |                           1/360                      |71.25 +- 0.18|49.74 +- 0.19|
+|          |         |GNN       |                           1/128                      |67.65 +- 0.18|49.94 +- 0.19|
+|          |         |CNN       |                           2/128                      |69.32 +- 0.21|54.21 +- 0.21|
+
 
 
 ## References
