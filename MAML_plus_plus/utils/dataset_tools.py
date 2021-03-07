@@ -10,7 +10,7 @@ def maybe_unzip_dataset(args):
     for dataset_idx, dataset_path in enumerate(dataset_paths):
         if dataset_path.endswith('/'):
             dataset_path = dataset_path[:-1]
-        print(dataset_path)
+        # print(dataset_path)
         if not os.path.exists(dataset_path):
             print("Not found dataset folder structure.. searching for .tar.bz2 file")
             zip_directory = "{}.tar.bz2".format(os.path.join(os.environ['DATASET_DIR'], datasets[dataset_idx]))
@@ -32,7 +32,7 @@ def maybe_unzip_dataset(args):
                 if file.lower().endswith(".jpeg") or file.lower().endswith(".jpg") or file.lower().endswith(
                         ".png") or file.lower().endswith(".pkl"):
                     total_files += 1
-        print("count stuff________________________________________", total_files)
+        # print("count stuff________________________________________", total_files)
         if (total_files == 1623 * 20 and datasets[dataset_idx] == 'omniglot_dataset') or (
                 total_files == 100 * 600 and 'mini_imagenet' in datasets[dataset_idx]) or (
                 total_files == 3 and 'mini_imagenet_pkl' in datasets[dataset_idx]):
@@ -40,7 +40,7 @@ def maybe_unzip_dataset(args):
             done = True
         elif datasets[dataset_idx] != 'omniglot_dataset' and datasets[dataset_idx] != 'mini_imagenet' and datasets[dataset_idx] != 'mini_imagenet_pkl':
             done = True
-            print("using new dataset")
+            # print("using new dataset")
 
         if not done:
             shutil.rmtree(dataset_path, ignore_errors=True)

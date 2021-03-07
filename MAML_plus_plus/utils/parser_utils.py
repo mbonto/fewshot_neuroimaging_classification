@@ -1,4 +1,3 @@
-# from torch import cuda
 import torch
 
 def get_args():
@@ -66,19 +65,18 @@ def get_args():
             args_dict[key] = False
         if key == "dataset_path":
             args_dict[key] = os.path.join(os.environ['DATASET_DIR'], args_dict[key])
-            print(key, os.path.join(os.environ['DATASET_DIR'], args_dict[key]))
 
-        print(key, args_dict[key], type(args_dict[key]))
-
+    print("model_name", args_dict["model_name"])
+    print("num_features", args_dict["num_features"])
+    print("num_stages", args_dict["num_stages"])
+    print("num_samples_per_class", args_dict["num_samples_per_class"])
+    
     args = Bunch(args_dict)
-
 
     args.use_cuda = torch.cuda.is_available()
     if torch.cuda.is_available():  # checks whether a cuda gpu is available and whether the gpu flag is True
         device = torch.cuda.current_device()
-
         print("use GPU", device)
-        print("GPU ID {}".format(torch.cuda.current_device()))
 
     else:
         print("use CPU")

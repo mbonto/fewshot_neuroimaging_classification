@@ -77,7 +77,7 @@ class LSLRGradientDescentLearningRule(nn.Module):
                 if set too small learning will proceed very slowly.
         """
         super(LSLRGradientDescentLearningRule, self).__init__()
-        print(init_learning_rate)
+        # print(init_learning_rate)
         assert init_learning_rate > 0., 'learning_rate should be positive.'
 
         self.init_learning_rate = torch.ones(1) * init_learning_rate

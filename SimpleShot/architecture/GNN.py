@@ -11,27 +11,25 @@ __all__ = ['GNN']
 # structural MRI (T1, DWI). Self-connections are set to zero.
 # DWI: Tractography looking at the strength of the white fibers between regions, averaged on 56 subjects.
 ### TO UPDATE
-connectivity_matrix_path = '/home/brain/Myriam/fMRI_transfer/github/dataset/SC_avg56.mat'
+connectivity_matrix_path = '/home/brain/Myriam/fMRI_transfer/git/fewshot_neuroimaging_classification/dataset/SC_avg56.mat'
 connectivity = sio.loadmat(connectivity_matrix_path)['SC_avg56']
 
 
-def compute_laplacian(adj_matrix, threshold=True):
-    adj_matrix = torch.from_numpy(adj_matrix)
-    # If threshold, we delete the connections whose strength is smaller than 1.
+def compute_normalized_adjacency(adj_matrix, threshold=True):
+    norm_adj = torch.from_numpy(adj_matrix)
     if threshold:
-        mask = (adj_matrix > 1).type(torch.float)
-        adj_matrix = adj_matrix * mask
-    # Maximal connection strength.
-    maxi = torch.max(adj_matrix)
+        # We keep the 1% highest connections (threshold value of 0.945 for the considered brain graph).
+        mask = (norm_adj > 0.945).type(torch.float)
+        norm_adj = norm_adj * mask
     # Add the identity matrix to the adjacency matrix.
-    adj_matrix += torch.eye(adj_matrix.shape[0]) * maxi
+    norm_adj = torch.add(norm_adj, torch.eye(norm_adj.shape[0]))
     # Compute the degree matrix by summing the columns.
-    degree = torch.sum(adj_matrix, dim=1)
-    degree = torch.pow(degree, -1)
+    degree = torch.sum(norm_adj, dim=1)
+    degree = torch.pow(degree, -1/2)
     degree = torch.diag(degree)
-    # Compute the Laplacian.
-    laplacian = torch.matmul(degree, adj_matrix)
-    return laplacian.type(torch.float)
+    # Compute a normalized adjacency matrix.
+    norm_adj = torch.matmul(torch.matmul(degree, norm_adj), degree)
+    return norm_adj.type(torch.float)
 
 
 def propagation(features, graph, k=1):
@@ -43,10 +41,9 @@ def propagation(features, graph, k=1):
         graph -- adjacency matrix of size (num_features, num_features).
         k -- number of times the features are propagated, integer.
     """
-    features = torch.unsqueeze(features, dim=1)
     for _ in range(k):
         features = torch.matmul(features, graph)
-    return torch.squeeze(features, dim=1)
+    return features
 
 
 class GNN(nn.Module):
@@ -56,7 +53,7 @@ class GNN(nn.Module):
     def __init__(self, num_classes, k, num_layers, num_feat):
         super(GNN, self).__init__()
         self.name = 'GNN'
-        self.graph = compute_laplacian(connectivity).cuda() ##.cpu()
+        self.graph = compute_normalized_adjacency(connectivity).cuda()
         self.k = k
         
         layers = []

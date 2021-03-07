@@ -45,3 +45,4 @@ for subdir, dir, files in os.walk(experiment_json_dir):
             local_script_name = '../{}/{}_{}.sh'.format('experiment_scripts', file.replace(".json", ''), prefix)
             local_script_name = os.path.abspath(local_script_name)
             write_text_to_file(text=local_script_text, filepath=local_script_name)
+    break  # enable to read only the files without digging into directories below

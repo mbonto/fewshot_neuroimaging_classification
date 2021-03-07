@@ -10,18 +10,18 @@ def reset_results_file(save_results):
     }
 
     num_features = {}
-    num_features['Conv1d'] = [4, 8, 16, 32, 64, 128, 256, 360, 512, 1024, 2048]
-    num_features['MLP'] = [256, 360, 512, 1024, 2048, 4096, 8192, 16384, 32768]
-    num_features['GNN'] = [256, 360, 512, 1024, 2048, 4096, 8192, 16384, 32768]
+    num_features['Conv1d'] = [64, 128, 256, 360, 512, 1024]
+    num_features['MLP'] = [64, 128, 256, 360, 512, 1024]
+    num_features['GNN'] = [64, 128, 256, 360, 512, 1024]
 
     for model_name in data.keys():
-        for depth in [1, 2, 3]:
+        for depth in [1, 2]:  # depth is the number of hidden layers within model
             data[model_name][depth] = {}
 
             for feature in num_features[model_name]:
                 data[model_name][depth][feature] = -1
 
-    with open(f'{save_results}/results.json', 'w') as file:  # 'IBC_maml++-IBC.json'
+    with open(f'{save_results}/results.json', 'w') as file:
         json.dump(data, file)
 
     data = {
@@ -33,18 +33,18 @@ def reset_results_file(save_results):
         for item in ['best_val_acc', 'depth', 'num_features', 'test_acc', 'test_std']:
             data[model_name][item] = 0
 
-    with open(f'{save_results}/best_results.json', 'w') as file:  # 'IBC_maml++-IBC.json'
+    with open(f'{save_results}/best_results.json', 'w') as file:
         json.dump(data, file)
 
-def update_results_file(save_results, model_name, depth, num_features, best_val_acc, test_acc, test_std):
+def update_results_file(save_results, model_name, depth, num_features, best_val_acc, test_acc, test_std, last_train_acc):
     with open(f'{save_results}/results.json') as file:
         results = json.load(file)
-        results[model_name][str(depth)][str(num_features)] = best_val_acc
+        results[model_name][str(depth)][str(num_features)] = [best_val_acc, last_train_acc]
 
     with open(f'{save_results}/results.json', 'w') as file:
         json.dump(results, file)
 
-    with open(f'{save_results}/best_results.json') as file:  # 'IBC_maml++-IBC.json'
+    with open(f'{save_results}/best_results.json') as file:
         results = json.load(file)
         if results[model_name]['best_val_acc'] <= best_val_acc:
             results[model_name]['best_val_acc'] = best_val_acc

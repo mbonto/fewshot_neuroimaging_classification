@@ -10,6 +10,7 @@ from numpy import linalg as LA
 from scipy.stats import mode
 import collections
 import tqdm
+import os
 
 from architecture import *
 
@@ -27,7 +28,7 @@ def batch_shape(model_name, x):
     # Resnet3d
     x = torch.ones(5, 1, 100, 100, 100) # batch, channel, dim1, dim2, dim3
     """    
-    if model_name == 'MLP' or model_name == 'GNN':
+    if model_name == 'MLP' or model_name == 'GNN' or model_name == 'LR':
         return torch.squeeze(x, dim=1)
     elif model_name == 'Resnet3d':
         return torch.unsqueeze(x, dim=1)
@@ -36,6 +37,8 @@ def batch_shape(model_name, x):
  
     
 def save_checkpoint(state, is_best, folder, filename='checkpoint.pth.tar'):
+    if not os.path.exists(folder):
+        os.makedirs(folder)
     torch.save(state, folder + filename)
     if is_best:
         shutil.copyfile(folder + filename, folder + '/model_best.pth.tar')

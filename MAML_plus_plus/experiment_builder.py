@@ -29,6 +29,7 @@ class ExperimentBuilder(object):
         self.state['best_val_acc'] = 0.
         self.state['best_val_iter'] = 0
         self.state['current_iter'] = 0
+        self.state['last_train_acc'] = 0
         self.start_epoch = 0
         self.max_models_to_save = self.args.max_models_to_save
         self.create_summary_csv = False
@@ -56,15 +57,15 @@ class ExperimentBuilder(object):
 
         self.data = data(args=args, current_iter=self.state['current_iter'])
 
-        print("train_seed {}, val_seed: {}, at start time".format(self.data.dataset.seed["train"],
-                                                                  self.data.dataset.seed["val"]))
+        # print("train_seed {}, val_seed: {}, at start time".format(self.data.dataset.seed["train"],
+        #                                                          self.data.dataset.seed["val"]))
         self.total_epochs_before_pause = self.args.total_epochs_before_pause
         self.state['best_epoch'] = int(self.state['best_val_iter'] / self.args.total_iter_per_epoch)
         self.epoch = int(self.state['current_iter'] / self.args.total_iter_per_epoch)
         self.augment_flag = True if 'omniglot' in self.args.dataset_name.lower() else False
         self.start_time = time.time()
         self.epochs_done_in_this_run = 0
-        print(self.state['current_iter'], int(self.args.total_iter_per_epoch * self.args.total_epochs))
+        # print(self.state['current_iter'], int(self.args.total_iter_per_epoch * self.args.total_epochs))
 
     def build_summary_dict(self, total_losses, phase, summary_losses=None):
         """
@@ -100,6 +101,7 @@ class ExperimentBuilder(object):
                     value = float(value)
                     output_update += "{}: {:.3f}, ".format(key, value)
         return output_update
+    
 
     def merge_two_dicts(self, first_dict, second_dict):
         """Given two dicts, merge them into a new dict as a shallow copy."""
@@ -138,10 +140,11 @@ class ExperimentBuilder(object):
 
         pbar_train.update(1)
         pbar_train.set_description("training {} -> {}".format(self.epoch, train_output_update))
-
+        
+        train_accuracy_mean = train_output_update.split(', ')[0].split(': ')[1]  ###
         current_iter += 1
 
-        return train_losses, total_losses, current_iter
+        return train_losses, total_losses, current_iter, train_accuracy_mean  ###
 
     def evaluation_iteration(self, val_sample, total_losses, pbar_val, phase):
         """
@@ -257,13 +260,12 @@ class ExperimentBuilder(object):
         per_epoch_statistics = self.state['per_epoch_statistics']
         val_acc = np.copy(per_epoch_statistics['val_accuracy_mean'])
         val_idx = np.array([i for i in range(len(val_acc))])
-        print(val_idx.shape)
         sorted_idx = np.argsort(val_acc, axis=0).astype(dtype=np.int32)[::-1][:top_n_models]
 
         sorted_val_acc = val_acc[sorted_idx]
         val_idx = val_idx[sorted_idx]
-        print(sorted_idx)
-        print(sorted_val_acc)
+        # print(sorted_idx)
+        # print(sorted_val_acc)
 
         top_n_idx = val_idx[:top_n_models]
         per_model_per_batch_preds = [[] for i in range(top_n_models)]
@@ -309,7 +311,7 @@ class ExperimentBuilder(object):
                                                       list(test_losses.values()),
                                                       create=False, filename="test_summary.csv")
         print(test_losses)
-        print("saved test performance at", summary_statistics_filepath)
+        # print("saved test performance at", summary_statistics_filepath)
         return test_losses
 
     def run_experiment(self):
@@ -326,14 +328,14 @@ class ExperimentBuilder(object):
                                                                       self.args.total_epochs) - self.state[
                                                                       'current_iter'],
                                                     augment_images=self.augment_flag)):
-                    train_losses, total_losses, self.state['current_iter'] = self.train_iteration(
+                    train_losses, total_losses, self.state['current_iter'], self.state['last_train_acc'] = self.train_iteration(
                         train_sample=train_sample,
                         total_losses=self.total_losses,
                         epoch_idx=(self.state['current_iter'] /
                                    self.args.total_iter_per_epoch),
                         pbar_train=pbar_train,
                         current_iter=self.state['current_iter'],
-                        sample_idx=self.state['current_iter'])
+                        sample_idx=self.state['current_iter'])  ###
 
                     if self.state['current_iter'] % self.args.total_iter_per_epoch == 0:
 
@@ -384,4 +386,4 @@ class ExperimentBuilder(object):
 #                 update_results_file(str(self.args.save_results) + '/' + str(self.args.num_samples_per_class) + '_shot', self.args.model_name, self.args.num_stages, self.args.num_features, self.state['best_val_acc'])
             
             test_losses = self.evaluated_test_set_using_the_best_models(top_n_models=self.args.max_models_to_save)
-            update_results_file(str(self.args.save_results) + '/' + str(self.args.num_samples_per_class) + '_shot', self.args.model_name, self.args.num_stages, self.args.num_features, self.state['best_val_acc'], test_losses["test_accuracy_mean"], test_losses["test_accuracy_std"])
+            update_results_file(str(self.args.save_results) + '/' + str(self.args.num_samples_per_class) + '_shot', self.args.model_name, self.args.num_stages, self.args.num_features, self.state['best_val_acc'], test_losses["test_accuracy_mean"], test_losses["test_accuracy_std"], self.state['last_train_acc'])  ###

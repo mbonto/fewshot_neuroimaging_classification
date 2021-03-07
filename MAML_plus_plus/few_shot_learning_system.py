@@ -6,7 +6,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
 
-from meta_neural_network_architectures import VGGReLUNormNetwork, MLP, GNN, Conv1d
+from meta_neural_network_architectures import MLP, GNN, Conv1d
 from inner_loop_optimizers import LSLRGradientDescentLearningRule
 
 
@@ -40,15 +40,14 @@ class MAMLFewShotClassifier(nn.Module):
         self.current_epoch = 0
 
         self.rng = set_torch_seed(seed=args.seed)
-#         self.classifier = VGGReLUNormNetwork(im_shape=self.im_shape, num_output_classes=self.args.
-#                                              num_classes_per_set,
-#                                              args=args, device=device, meta_classifier=True).to(device=self.device)
+
         if args.model_name == 'MLP':
             self.classifier = MLP(num_output_classes=self.args.num_classes_per_set, args=args, device=device, meta_classifier=True).to(device=self.device)
         elif args.model_name == 'GNN':
             self.classifier = GNN(num_output_classes=self.args.num_classes_per_set, args=args, device=device, meta_classifier=True).to(device=self.device)
         elif args.model_name == 'Conv1d':
             self.classifier = Conv1d(num_output_classes=self.args.num_classes_per_set, args=args, device=device, meta_classifier=True).to(device=self.device)
+        
         self.task_learning_rate = args.task_learning_rate
 
         self.inner_loop_optimizer = LSLRGradientDescentLearningRule(device=device,
@@ -66,10 +65,10 @@ class MAMLFewShotClassifier(nn.Module):
         self.device = device
         self.args = args
         self.to(device)
-        print("Outer Loop parameters")
-        for name, param in self.named_parameters():
-            if param.requires_grad:
-                print(name, param.shape, param.device, param.requires_grad)
+        # print("Outer Loop parameters")
+        # for name, param in self.named_parameters():
+        #     if param.requires_grad:
+        #         print(name, param.shape, param.device, param.requires_grad)
 
 
         self.optimizer = optim.Adam(self.trainable_parameters(), lr=args.meta_learning_rate, amsgrad=False)
