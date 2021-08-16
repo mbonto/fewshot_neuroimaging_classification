@@ -15,7 +15,7 @@ def create_sampler(IBC_path, split_dir, split):
     weight = 1. / class_sample_count
     samples_weight = np.array([weight[t] for t in dataset.labels])
     samples_weight = torch.from_numpy(samples_weight)
-    samples_weigth = samples_weight.double()
+    samples_weight = samples_weight.double()
     sampler = spler.WeightedRandomSampler(samples_weight, int(minimum*len(np.unique(dataset.labels))), replacement=False)
     return sampler
 
